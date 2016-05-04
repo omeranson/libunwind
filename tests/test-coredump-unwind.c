@@ -31,6 +31,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <features.h>
 #include <inttypes.h>
 #include <setjmp.h>
 #include <signal.h>
@@ -57,7 +58,9 @@
 #include <grp.h>
 
 /* For SIGSEGV handler code */
+#ifdef __GLIBC__
 #include <execinfo.h>
+#endif
 #include <sys/ucontext.h>
 
 #include <libunwind-coredump.h>
@@ -242,7 +245,7 @@ void handle_sigsegv(int sig, siginfo_t *info, void *ucontext)
     void *array[50];
     int size;
     size = backtrace(array, 50);
-#ifdef __linux__
+#if defined(__linux__) && defined(__GLIBC__)
     backtrace_symbols_fd(array, size, 2);
 #endif
   }

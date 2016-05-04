@@ -26,7 +26,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 
 #include "ucontext_i.h"
 #if defined __linux__
-#include <asm/unistd.h>
+#include <sys/syscall.h>
 #define	SIG_SETMASK   2
 #define	SIGSET_BYTE_SIZE   (64/8)
 #elif defined __FreeBSD__
